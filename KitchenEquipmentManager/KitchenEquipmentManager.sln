@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenEquipmentManager.UI", "KitchenEquipmentManager.UI\KitchenEquipmentManager.UI.csproj", "{7745FDB3-393A-4483-9D8E-B1B186512078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenEquipmentManager.Domain", "KitchenEquipmentManager.Domain\KitchenEquipmentManager.Domain.csproj", "{C4428F4F-1D78-482F-AD39-D1BCF2424714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitchenEquipmentManager.Repository", "KitchenEquipmentManager.Repository\KitchenEquipmentManager.Repository.csproj", "{78AC9426-2015-420B-9548-4F47121FCB56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7745FDB3-393A-4483-9D8E-B1B186512078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7745FDB3-393A-4483-9D8E-B1B186512078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7745FDB3-393A-4483-9D8E-B1B186512078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7745FDB3-393A-4483-9D8E-B1B186512078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4428F4F-1D78-482F-AD39-D1BCF2424714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4428F4F-1D78-482F-AD39-D1BCF2424714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4428F4F-1D78-482F-AD39-D1BCF2424714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4428F4F-1D78-482F-AD39-D1BCF2424714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78AC9426-2015-420B-9548-4F47121FCB56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78AC9426-2015-420B-9548-4F47121FCB56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78AC9426-2015-420B-9548-4F47121FCB56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78AC9426-2015-420B-9548-4F47121FCB56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DC8C4BB-36F2-4B3A-B7BC-E5028EEFE135}
+	EndGlobalSection
+EndGlobal

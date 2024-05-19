@@ -20,7 +20,7 @@ namespace KitchenEquipmentManager.Domain.Models
         public string Description { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
         public string Condition { get; set; }
 
         [Required]

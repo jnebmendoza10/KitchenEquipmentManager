@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Policy;
 
 namespace KitchenEquipmentManager.Domain.Models
 {
-    public class User
+    public class User : BaseDomain
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid UserId { get; set; }
-
         [Required]
         [StringLength(50)]
         public string UserType { get; set; }

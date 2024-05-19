@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KitchenEquipmentManager.Domain.Models
 {
-    public class Equipment
+    public class Equipment : BaseDomain
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid EquipmentId { get; set; }
-
         [Required]
         [StringLength(8)]
         public string SerialNumber { get; set; }

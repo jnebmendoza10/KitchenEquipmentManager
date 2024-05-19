@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KitchenEquipmentManager.Domain.Models
 {
-    public class Site
+    public class Site : BaseDomain
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid SiteId { get; set; }
-
         [Required]
         public Guid UserId { get; set; }
 

@@ -1,11 +1,6 @@
-﻿using KitchenEquipmentManager.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KitchenEquipmentManager.Domain.Models;
 
 namespace KitchenEquipmentManager.Repository
 {
@@ -26,8 +21,8 @@ namespace KitchenEquipmentManager.Repository
             #region User
             modelBuilder.Entity<User>()
                 .ToTable("User")
-                .HasKey(u => u.UserId)
-                .Property(u => u.UserId).HasColumnName("user_id")
+                .HasKey(u => u.Id)
+                .Property(u => u.Id).HasColumnName("user_id")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<User>()
@@ -54,8 +49,8 @@ namespace KitchenEquipmentManager.Repository
 
             modelBuilder.Entity<Site>()
                 .ToTable("Site")
-                .HasKey(s => s.SiteId)
-                .Property(s => s.SiteId).HasColumnName("site_id")
+                .HasKey(s => s.Id)
+                .Property(s => s.Id).HasColumnName("site_id")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<Site>()
@@ -76,8 +71,8 @@ namespace KitchenEquipmentManager.Repository
 
             modelBuilder.Entity<Equipment>()
                 .ToTable("Equipment")
-                .HasKey(e => e.EquipmentId)
-                .Property(e => e.EquipmentId).HasColumnName("equipment_id")
+                .HasKey(e => e.Id)
+                .Property(e => e.Id).HasColumnName("equipment_id")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<Equipment>()

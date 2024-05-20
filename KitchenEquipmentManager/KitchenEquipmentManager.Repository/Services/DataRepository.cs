@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using KitchenEquipmentManager.Domain.Models;
 
@@ -49,6 +50,7 @@ namespace KitchenEquipmentManager.Repository.Services
             {
                 T retrievedEntity = context.Set<T>().FirstOrDefault((e) => e.Id == id);
                 context.Set<T>().Remove(retrievedEntity);
+                context.SaveChanges();
             }
         }
 
@@ -60,7 +62,10 @@ namespace KitchenEquipmentManager.Repository.Services
 
                 if (entity != null)
                 {
-                    retrievedEntity = entity;
+                    context.Entry(retrievedEntity).CurrentValues.SetValues(entity);
+
+                    context.Entry(retrievedEntity).State = EntityState.Modified;
+
                     context.SaveChanges();
                 }
             }

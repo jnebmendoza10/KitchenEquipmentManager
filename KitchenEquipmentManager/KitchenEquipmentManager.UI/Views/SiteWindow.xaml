@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KitchenEquipmentManager.UI.Views"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="Sites" Height="400" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -22,18 +24,17 @@
                    HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
 
         <!-- DataGrid -->
-        <DataGrid x:Name="SitesDataGrid" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0" 
+        <DataGrid x:Name="SitesDataGrid" ItemsSource="{Binding Sites}" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0" 
                   CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" Margin="0,10,10,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Site Id" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="Active" Binding="{Binding Manager}" Width="*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTextColumn Header="Active" Binding="{Binding Active, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Edit" Margin="5,0" />
-                                <Button Content="Delete" Margin="5,0" />
+                                <Button Content="Edit" Command="{Binding DataContext.UpdateSiteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"  Margin="5,0" />
+                                <Button Content="Delete" Command="{Binding DataContext.DeleteSiteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -46,13 +47,13 @@
             <TextBlock Text="Site Details" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
 
             <Label Content="Site Description:"/>
-            <TextBox x:Name="Description" Width="200" Margin="0,0,10,10"/>
+            <TextBox x:Name="Description" Text="{Binding SiteDescription}" Width="200" Margin="0,0,10,10"/>
 
             <Label Content="Is Active?:"/>
-            <TextBox x:Name="LocationTextBox" Width="200" Margin="0,0,10,20"/>
+            <ComboBox x:Name="LocationTextBox" ItemsSource="{Binding SiteStates}" SelectedItem="{Binding IsSiteActive}" Width="200" Margin="0,0,10,20"/>
             <DockPanel>
-                <Button Content="Save" Width="100" Margin="5" />
-                <Button Content="Cancel" Width="100" Margin="5" />
+                <Button Content="Add" Command="{Binding AddSiteCommand}" Width="100" Margin="5" />
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5" />
             </DockPanel>
 
         </StackPanel>

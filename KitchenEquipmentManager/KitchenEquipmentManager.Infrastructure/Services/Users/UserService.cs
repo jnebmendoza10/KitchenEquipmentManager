@@ -28,13 +28,8 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
             }
         }
 
-        public List<User> GetAllUsers(string role)
+        public List<User> GetAllUsers()
         {
-            if (role == RoleType.ADMIN)
-            {
-                return new List<User>(); // return an empty list since we will not have access to Users tab
-            }
-
             try
             {
                 var users = _userRepository.GetAll();

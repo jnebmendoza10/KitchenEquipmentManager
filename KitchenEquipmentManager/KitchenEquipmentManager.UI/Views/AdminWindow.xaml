@@ -5,14 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KitchenEquipmentManager.UI.Views"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Admin" Height="450" Width="800">
     <Grid>
+        <!-- Description and Welcome Message -->
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,20">
+            <TextBlock Text="Welcome to the Kitchen Equipment Manager" 
+                           FontWeight="Bold" 
+                           FontSize="20" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,10"/>
+            <TextBlock Text="Manage and track your kitchen equipment efficiently with our application. Keep your kitchen running smoothly by organizing users, sites, and equipment effortlessly." 
+                           TextWrapping="Wrap" 
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+        </StackPanel>
+
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Users" Name="UsersMenuItem" />
-                <MenuItem Header="Sites" Name="SitesMenuItem" />
-                <MenuItem Header="Equipments" Name="EquipmentsMenuItem" />
-                <MenuItem Header="Logout" Name="LogoutMenuItem"/>
+                <MenuItem Header="Users" Name="UsersMenuItem" Click="UsersMenuItem_Click" />
+                <MenuItem Header="Sites" Name="SitesMenuItem" Click="SitesMenuItem_Click" />
+                <MenuItem Header="Equipments" Name="EquipmentsMenuItem" Click="EquipmentsMenuItem_Click" />
+                <MenuItem Header="Logout" Name="LogoutMenuItem" Click="LogoutMenuItem_Click"/>
             </Menu>
             <Frame Name="MainFrame"/>
         </DockPanel>

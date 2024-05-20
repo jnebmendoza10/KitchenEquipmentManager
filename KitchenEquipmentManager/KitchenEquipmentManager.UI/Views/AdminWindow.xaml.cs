@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using KitchenEquipmentManager.UI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KitchenEquipmentManager.UI.Views
 {
@@ -19,9 +10,72 @@ namespace KitchenEquipmentManager.UI.Views
     /// </summary>
     public partial class AdminWindow : Window
     {
+        private AdminViewModel _adminViewModel;
+        private const string ADMIN = "Admin";
+
         public AdminWindow()
         {
             InitializeComponent();
+        }
+
+        private AdminViewModel AdminViewModel
+        {
+            get
+            {
+                if (_adminViewModel == null)
+                {
+                    _adminViewModel = DataContext as AdminViewModel;
+                }
+
+                return _adminViewModel;
+            }
+        }
+
+        private void UsersMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Add logic to check if the logged in user has access to this one 
+            if (AdminViewModel.UserViewModel.UserType == ADMIN)
+            {
+                MessageBox.Show("You do not have permission to access this menu", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var usersMenuWindow = new UsersWindow();
+
+            var userManagementViewModel = AdminViewModel.GetRequiredService().GetService<UsersManagementViewModel>();
+            userManagementViewModel.CurrentUserLoggedIn = AdminViewModel.UserViewModel;
+            usersMenuWindow.DataContext = userManagementViewModel;
+            usersMenuWindow.ShowDialog();
+        }
+
+        private void SitesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var sitesMenuWindow = new SiteWindow();
+            var sitesMenuViewModel = AdminViewModel.GetRequiredService().GetService<SiteViewModel>();
+            sitesMenuViewModel.CurrentUserLoggedIn = AdminViewModel.UserViewModel;
+            sitesMenuViewModel.GetSites();
+
+            sitesMenuWindow.DataContext = sitesMenuViewModel;
+            sitesMenuWindow.ShowDialog();
+        }
+
+        private void EquipmentsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var equipmentMenuWindow = new EquipmentWindow();
+
+            var equipmentMenuViewModel = AdminViewModel.GetRequiredService().GetService<EquipmentViewModel>();
+            equipmentMenuViewModel.CurrentUserLoggedIn = AdminViewModel.UserViewModel;
+            equipmentMenuViewModel.RetrieveEquipments();
+            equipmentMenuWindow.DataContext = equipmentMenuViewModel;
+            
+            equipmentMenuWindow.ShowDialog();
+        }
+
+        private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a logic to dispose all views and viewmodels.
+            // Redirect the user to Login Window
+            this.Close();
+            Application.Current.MainWindow.Show();
         }
     }
 }

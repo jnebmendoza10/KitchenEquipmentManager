@@ -6,7 +6,7 @@ namespace KitchenEquipmentManager.Repository
 {
     public class KitchenManagerDbContext : DbContext
     {
-        private const string CONNECTION_STRING = "name=KitchenManagerDbContext";
+        private const string CONNECTION_STRING = "Data Source=DESKTOP-9K62KT2;Initial Catalog=KitchenManagerDB;Integrated Security=True";
         public KitchenManagerDbContext() : base(CONNECTION_STRING)
         {
         }

@@ -9,7 +9,7 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
 {
     public interface IUserService
     {
-        List<User> GetAllUsers(string role);
+        List<User> GetAllUsers();
         bool UpdateUser(User user);
         bool DeleteUser(User user);
     }

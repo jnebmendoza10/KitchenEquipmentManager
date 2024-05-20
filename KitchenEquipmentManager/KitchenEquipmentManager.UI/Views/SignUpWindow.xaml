@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:KitchenEquipmentManager.UI.Views"
+        xmlns:local="clr-namespace:KitchenEquipmentManager.UI.Behavior"
         mc:Ignorable="d"
-        Title="Sign Up" Height="350" Width="412">
+        WindowStartupLocation="CenterScreen"
+        Title="Sign Up" Height="377" Width="417">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,30 +22,28 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Sign Up" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,20" Grid.Row="0"/>
+        <Label Content="Sign Up" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,10" Grid.Row="0"/>
 
-        <Label Content="User Type:" Grid.Row="1" Margin="34,0,14,28" Grid.RowSpan="2"/>
-        <ComboBox x:Name="UserTypeComboBox" Grid.Row="1" Margin="0,5,0,5" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="User Type:" Grid.Row="1" VerticalAlignment="Top" Margin="0,3,10,0"/>
+        <ComboBox x:Name="UserTypeComboBox" ItemsSource="{Binding UserTypes}" SelectedValue="{Binding SelectedUserType}" Grid.Row="1" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <Label Content="First Name:" Grid.Row="2" Margin="34,0,0,28" Grid.RowSpan="2"/>
-        <TextBox x:Name="FirstNameTextBox" Grid.Row="2" Margin="0,5,0,5" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="First Name:" Grid.Row="2" VerticalAlignment="Top" Margin="0,1,10,0"/>
+        <TextBox x:Name="FirstNameTextBox" Text="{Binding FirstName}"  Grid.Row="2" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <Label Content="Last Name:" Grid.Row="3" Margin="34,0,10,28" Grid.RowSpan="2"/>
-        <TextBox x:Name="LastNameTextBox" Grid.Row="3" Margin="0,5,0,5" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="Last Name:" Grid.Row="3" VerticalAlignment="Top" Margin="0,1,10,0"/>
+        <TextBox x:Name="LastNameTextBox" Text="{Binding LastName}" Grid.Row="3" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <Label Content="Email:" Grid.Row="4" Margin="34,0,0,28" Grid.RowSpan="2"/>
-        <TextBox x:Name="EmailTextBox" Grid.Row="4" Margin="0,5,0,5" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="Email:" Grid.Row="4" VerticalAlignment="Top" Margin="0,1,10,0"/>
+        <TextBox x:Name="EmailTextBox" Text="{Binding Email}" Grid.Row="4" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <Label Content="Username:" Grid.Row="5" Margin="34,0,0,28" Grid.RowSpan="2"/>
-        <TextBox x:Name="UsernameTextBox" Grid.Row="5" Margin="0,5,0,5" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="Username:" Grid.Row="5" VerticalAlignment="Top" Margin="0,1,10,0"/>
+        <TextBox x:Name="UsernameTextBox" Text="{Binding UserName}" Grid.Row="5" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <Label Content="Password:" Grid.Row="6" Margin="34,0,0,60" Grid.RowSpan="3"/>
-        <PasswordBox x:Name="PasswordBox" Grid.Row="6" Margin="0,5,0,117" Width="170" HorizontalAlignment="Center"/>
+        <Label Content="Password:" Grid.Row="6" VerticalAlignment="Top" Margin="0,1,10,0"/>
+        <PasswordBox local:PasswordBoxBindingBehavior.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="PasswordBox" Grid.Row="6" Margin="80,5,0,10" HorizontalAlignment="Stretch"/>
 
-        <DockPanel Grid.Row="6" Margin="68,45,10,35">
-            <Button Content="Sign Up"  Width="100" HorizontalAlignment="Center" Margin="0,20"/>
-            <Button Content="Cancel"  Width="100" HorizontalAlignment="Center" Margin="0,20"/>
-        </DockPanel>
-
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+            <Button Content="Sign Up" Command="{Binding SignUpUserCommand}" Width="100"/>
+        </StackPanel>
     </Grid>
 </Window>

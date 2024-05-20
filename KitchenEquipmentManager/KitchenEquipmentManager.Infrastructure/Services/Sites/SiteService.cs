@@ -61,9 +61,11 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Sites
         {
             try
             {
-                var sites = _siteRepository.GetAll().Where(x => x.Id == user.Id).ToList();
+                var sites = _siteRepository.GetAll().ToList();
 
-                return sites;
+                var filteredSites = sites.Where(x => x.UserId == user.Id).ToList();
+
+                return filteredSites;
             }
             catch (Exception)
             {

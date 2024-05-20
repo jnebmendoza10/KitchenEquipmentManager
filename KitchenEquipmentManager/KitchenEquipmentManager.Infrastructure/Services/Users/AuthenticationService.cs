@@ -21,9 +21,11 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
             try
             {
                 // Retrieved user
-                var user = _userRepository.GetAll()
-                    .Where(a => a.UserName == username).FirstOrDefault();
-                if (user == null)
+                var users = _userRepository.GetAll().ToList();
+
+                var retrivedUser = users.Find(x => x.UserName.Equals(username));
+
+                if (retrivedUser == null)
                 {
                     // throw Exception indicating that user is not existing.
                     // Display a generic error ( Invalid user name or password.)
@@ -31,17 +33,17 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
                 }
 
                 // Validate password
-                if (!_passwordService.ValidatePassword(password, user.Password))
+                if (!_passwordService.ValidatePassword(password, retrivedUser.Password))
                 {
                     // Display a generic error ( Invalid user name or password.)
                     throw new Exception();
                 }
 
-                return user;
+                return retrivedUser;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw ex;
             }
             
         }
@@ -57,13 +59,14 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
                 {
                     return false; // username already exists
                 }
+                user.Password = _passwordService.CreateHash(user.Password);
                 _userRepository.Add(user);
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw ex;
             }
         }
     }

@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using KitchenEquipmentManager.UI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KitchenEquipmentManager.UI.Views
 {
@@ -19,9 +9,30 @@ namespace KitchenEquipmentManager.UI.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private LoginViewModel _loginViewModel;
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+        private LoginViewModel LoginViewModel
+        {
+            get
+            {
+                if (_loginViewModel == null)
+                {
+                    _loginViewModel = DataContext as LoginViewModel;
+                }
+
+                return _loginViewModel;
+            }
+        }
+
+        private void SignupButton_Click(object sender, RoutedEventArgs e)
+        {
+            var signupWindow = new SignUpWindow();
+            signupWindow.DataContext = LoginViewModel.GetRequiredService().GetService<SignupViewModel>();
+            signupWindow.ShowDialog();
         }
     }
 }

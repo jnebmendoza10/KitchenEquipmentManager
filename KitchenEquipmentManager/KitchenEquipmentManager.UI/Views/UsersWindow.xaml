@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KitchenEquipmentManager.UI.Views"
         mc:Ignorable="d"
-        Title="UsersWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Users" Height="450" Width="800">
    
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -17,16 +18,25 @@
                    HorizontalAlignment="Center"/>
 
         <DataGrid x:Name="UsersDataGrid" AutoGenerateColumns="False" Grid.Row="1" 
-                  CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,0" >
+                  CanUserAddRows="False" ItemsSource="{Binding Users}" IsReadOnly="False" SelectionMode="Single" Margin="0,10,0,0" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Username" Width="*"/>
-                <DataGridTextColumn Header="Role" Width="*"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTemplateColumn Header="Role" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding UserType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }">
+                                <ComboBoxItem Content="Admin" />
+                                <ComboBoxItem Content="SuperAdmin" />
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Edit" Margin="5,0" />
-                                <Button Content="Delete" Margin="5,0"/>
+                                <Button Content="Edit" Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
+                                <Button Content="Delete" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

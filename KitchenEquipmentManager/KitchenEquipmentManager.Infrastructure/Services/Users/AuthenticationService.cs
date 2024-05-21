@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using KitchenEquipmentManager.Domain.Models;
+using KitchenEquipmentManager.Infrastructure.Exceptions;
 using KitchenEquipmentManager.Repository.Services;
 
 namespace KitchenEquipmentManager.Infrastructure.Services.Users
@@ -29,26 +30,26 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
                 {
                     // throw Exception indicating that user is not existing.
                     // Display a generic error ( Invalid user name or password.)
-                    throw new Exception();
+                    throw new InvalidUserAndPasswordException();
                 }
 
                 // Validate password
                 if (!_passwordService.ValidatePassword(password, retrivedUser.Password))
                 {
                     // Display a generic error ( Invalid user name or password.)
-                    throw new Exception();
+                    throw new InvalidUserAndPasswordException();
                 }
 
                 return retrivedUser;
             }
-            catch (Exception ex)
+            catch (InvalidUserAndPasswordException ex)
             {
                 throw ex;
             }
             
         }
 
-        public bool Register(User user)
+        public void Register(User user)
         {
             try
             {
@@ -57,14 +58,16 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
                     .Where(a => a.UserName == user.UserName).FirstOrDefault();
                 if (retrievedUser != null)
                 {
-                    return false; // username already exists
+                    throw new UserAlreadyExistsException();
                 }
                 user.Password = _passwordService.CreateHash(user.Password);
                 _userRepository.Add(user);
-
-                return true;
             }
-            catch (Exception ex)
+            catch (UserAlreadyExistsException ex)
+            {
+                throw ex;
+            }
+            catch (InvalidOperationException ex)
             {
                 throw ex;
             }

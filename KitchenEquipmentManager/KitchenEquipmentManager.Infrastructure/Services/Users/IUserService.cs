@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KitchenEquipmentManager.Domain.Models;
 
 namespace KitchenEquipmentManager.Infrastructure.Services.Users
@@ -10,7 +6,7 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
     public interface IUserService
     {
         List<User> GetAllUsers();
-        bool UpdateUser(User user);
-        bool DeleteUser(User user);
+        void UpdateUser(User user);
+        void DeleteUser(User user);
     }
 }

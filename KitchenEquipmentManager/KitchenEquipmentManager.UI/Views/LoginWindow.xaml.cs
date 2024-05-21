@@ -34,5 +34,10 @@ namespace KitchenEquipmentManager.UI.Views
             signupWindow.DataContext = LoginViewModel.GetRequiredService().GetService<SignupViewModel>();
             signupWindow.ShowDialog();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KitchenEquipmentManager.Domain.Models;
 using KitchenEquipmentManager.Repository.Services;
 
@@ -15,45 +13,39 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Sites
         {
             _siteRepository = siteRepository ?? throw new ArgumentNullException(nameof(siteRepository));
         }
-        public bool AddSite(Site site)
+        public void AddSite(Site site)
         {
             try
             {
                 _siteRepository.Add(site);
-
-                return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
-        public bool DeleteSite(Site site)
+        public void DeleteSite(Site site)
         {
             try
             {
                 _siteRepository.Remove(site.Id);
-
-                return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
-        public bool UpdateSite(Site site)
+        public void UpdateSite(Site site)
         {
             try
             {
                 _siteRepository.Update(site, site.Id);
-
-                return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -67,9 +59,9 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Sites
 
                 return filteredSites;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                throw new Exception();
+                throw ex;
             }
         }
     }

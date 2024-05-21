@@ -28,12 +28,20 @@
                   CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" Margin="0,10,10,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTextColumn Header="Active" Binding="{Binding Active, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                <DataGridTemplateColumn Header="Active" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"
+                       ItemsSource="{Binding DataContext.SiteStates, RelativeSource={RelativeSource AncestorType=Window}}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Actions" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Edit" Command="{Binding DataContext.UpdateSiteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"  Margin="5,0" />
+                                <Button Content="Update" Command="{Binding DataContext.UpdateSiteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"  Margin="5,0" />
                                 <Button Content="Delete" Command="{Binding DataContext.DeleteSiteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                             </StackPanel>
                         </DataTemplate>
@@ -50,7 +58,7 @@
             <TextBox x:Name="Description" Text="{Binding SiteDescription}" Width="200" Margin="0,0,10,10"/>
 
             <Label Content="Is Active?:"/>
-            <ComboBox x:Name="LocationTextBox" ItemsSource="{Binding SiteStates}" SelectedItem="{Binding IsSiteActive}" Width="200" Margin="0,0,10,20"/>
+            <ComboBox x:Name="LocationTextBox" ItemsSource="{Binding SiteStates}" Width="200" Margin="0,0,10,20"/>
             <DockPanel>
                 <Button Content="Add" Command="{Binding AddSiteCommand}" Width="100" Margin="5" />
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5" />

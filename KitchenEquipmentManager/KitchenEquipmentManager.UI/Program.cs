@@ -29,6 +29,7 @@ namespace KitchenEquipmentManager.UI
                 services.AddTransient<UsersManagementViewModel>();
                 services.AddTransient<EquipmentViewModel>();
                 services.AddTransient<SiteViewModel>();
+                services.AddTransient<RegisterEquipmentViewModel>();
             })
             .Build();
 

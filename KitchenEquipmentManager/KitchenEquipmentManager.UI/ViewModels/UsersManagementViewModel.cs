@@ -56,6 +56,18 @@ namespace KitchenEquipmentManager.UI.ViewModels
             set => SetProperty(ref _users, value, nameof(Users));
         }
 
+        public List<string> UserTypes
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "Admin",
+                    "SuperAdmin"
+                };
+            }
+        }
+
         public UserViewModel CurrentUserLoggedIn
         {
             get => _currentUserLoggedIn;
@@ -74,15 +86,28 @@ namespace KitchenEquipmentManager.UI.ViewModels
             if (user == null)
                 return;
 
-            bool isUpdatedSuccessful = _userService.UpdateUser(user);
-
-            if (isUpdatedSuccessful)
+            if (string.IsNullOrEmpty(user.UserName))
             {
+                MessageBox.Show("Please update empty fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            //Let's check if there are changes made, make sure to finish update first before deleting to prevent any error
+            if (Users.Contains(user))
+            {
+                MessageBox.Show("No updates were made.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                _userService.UpdateUser(user);
+
                 MessageBox.Show("Update successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                MessageBox.Show("Update unsuccessful.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -97,18 +122,16 @@ namespace KitchenEquipmentManager.UI.ViewModels
                 return;
             }
 
-
-            bool isDeleteSuccessful = _userService.DeleteUser(user);
-
-            Users.Remove(user);
-
-            if (isDeleteSuccessful)
+            try
             {
+                _userService.DeleteUser(user);
+                Users.Remove(user);
+
                 MessageBox.Show("Delete successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                MessageBox.Show("Delete successful", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

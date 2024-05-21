@@ -24,18 +24,17 @@
                 <DataGridTemplateColumn Header="Role" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedItem="{Binding UserType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }">
-                                <ComboBoxItem Content="Admin" />
-                                <ComboBoxItem Content="SuperAdmin" />
+                            <ComboBox SelectedItem="{Binding UserType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"
+                                      ItemsSource="{Binding DataContext.UserTypes, RelativeSource={RelativeSource AncestorType=Window}}">
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                <DataGridTemplateColumn Header="Actions" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Edit" Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
+                                <Button Content="Update" Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                                 <Button Content="Delete" Command="{Binding DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0"/>
                             </StackPanel>
                         </DataTemplate>

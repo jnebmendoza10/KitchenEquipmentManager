@@ -6,8 +6,8 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Sites
     public interface ISiteService
     {
         List<Site> RetrieveSitesForUser(User user);
-        bool AddSite(Site site);
-        bool UpdateSite(Site site);
-        bool DeleteSite(Site site);
+        void AddSite(Site site);
+        void UpdateSite(Site site);
+        void DeleteSite(Site site);
     }
 }

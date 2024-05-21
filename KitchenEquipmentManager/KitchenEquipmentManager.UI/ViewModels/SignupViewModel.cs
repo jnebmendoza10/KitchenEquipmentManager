@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using KitchenEquipmentManager.Domain.Models;
+using KitchenEquipmentManager.Infrastructure.Exceptions;
 using KitchenEquipmentManager.Infrastructure.Services.Users;
 using KitchenEquipmentManager.UI.Command;
+using KitchenEquipmentManager.UI.Validations;
 
 namespace KitchenEquipmentManager.UI.ViewModels
 {
@@ -105,15 +107,34 @@ namespace KitchenEquipmentManager.UI.ViewModels
             user.UserName = UserName;
             user.Password = Password;
 
-            bool succesfulRegistration = _authenticationService.Register(user);
-            if (succesfulRegistration)
+            string errorMessages = user.IsUserValid();
+
+            if (!string.IsNullOrEmpty(errorMessages))
             {
+                MessageBox.Show(errorMessages, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            try
+            {
+                _authenticationService.Register(user);
+
                 MessageBox.Show("Registration successful.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (UserAlreadyExistsException ex)
             {
-                MessageBox.Show("Registration unsuccessful.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void validateUser(User user)
+        {
+
         }
             
     }

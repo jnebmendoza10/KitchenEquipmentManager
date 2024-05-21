@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using KitchenEquipmentManager.Infrastructure.Exceptions;
 using KitchenEquipmentManager.Infrastructure.Services.Users;
 using KitchenEquipmentManager.UI.Command;
 using KitchenEquipmentManager.UI.Views;
@@ -57,29 +58,45 @@ namespace KitchenEquipmentManager.UI.ViewModels
                 MessageBox.Show("Please enter both username and password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var user = _authenticationService.Login(Username, Password);
-
-            if (user != null)
+            try
             {
-                Application.Current.MainWindow.Hide();
-                var adminViewModel = GetRequiredService().GetService<AdminViewModel>();
-                adminViewModel.UserViewModel.UserId = user.Id;
-                adminViewModel.UserViewModel.UserType = user.UserType;
-                adminViewModel.UserViewModel.UserName = user.UserName;
+                var user = _authenticationService.Login(Username, Password);
 
-                AdminWindow adminWindow = new AdminWindow();
-                adminWindow.DataContext = adminViewModel;
-                adminWindow.ShowDialog();
+                if (user != null)
+                {
+                    Application.Current.MainWindow.Hide();
+                    clearFields();
 
+                    var adminViewModel = GetRequiredService().GetService<AdminViewModel>();
+                    adminViewModel.UserViewModel.UserId = user.Id;
+                    adminViewModel.UserViewModel.UserType = user.UserType;
+                    adminViewModel.UserViewModel.UserName = user.UserName;
+
+                    AdminWindow adminWindow = new AdminWindow();
+                    adminWindow.DataContext = adminViewModel;
+                    adminWindow.ShowDialog();
+
+                    return;
+                }
+            }
+            catch (InvalidUserAndPasswordException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
+            
             MessageBox.Show("Login unsuccessful", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         public IServiceProvider GetRequiredService()
         {
             return _serviceProvider;
+        }
+
+        private void clearFields()
+        {
+            Username = string.Empty;
+            Password = string.Empty;
         }
     }
 }

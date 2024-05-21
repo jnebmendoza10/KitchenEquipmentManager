@@ -19,7 +19,7 @@ namespace KitchenEquipmentManager.Infrastructure
             services.AddSingleton<IDataRepository<User>, DataRepository<User>>();
             services.AddSingleton<IDataRepository<Site>, DataRepository<Site>>();
             services.AddSingleton<IDataRepository<Equipment>, DataRepository<Equipment>>();
-
+            services.AddSingleton<IDataRepository<RegisteredEquipment>, DataRepository<RegisteredEquipment>>();
             // Register Services
 
             //User

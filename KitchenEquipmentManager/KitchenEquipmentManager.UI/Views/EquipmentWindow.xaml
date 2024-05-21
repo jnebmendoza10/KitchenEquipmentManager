@@ -29,11 +29,20 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <DataGridTextColumn Header="Description"  Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTextColumn Header="Condition" Binding="{Binding Condition, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                <DataGridTemplateColumn Header="Condition" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding Condition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"
+       ItemsSource="{Binding DataContext.Conditions, RelativeSource={RelativeSource AncestorType=Window}}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Actions" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Register"  Command="{Binding DataContext.RegisterEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                                 <Button Content="Edit" Command="{Binding DataContext.UpdateEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                                 <Button Content="Delete" Command="{Binding DataContext.DeleteEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                             </StackPanel>
@@ -54,7 +63,7 @@
             <TextBox x:Name="DescriptionTextBox" Text="{Binding EquipmentDescription}" Width="200" Margin="0,0,10,10"/>
 
             <Label Content="Condition:"/>
-            <TextBox x:Name="ConditionTextBox" Text="{Binding EquipmentCondition}" Width="200" Margin="0,0,10,10"/>
+            <ComboBox x:Name="ConditionComboBox" ItemsSource="{Binding Conditions}" SelectedItem="{Binding EquipmentCondition}" Width="200" Margin="0,0,10,10"/>
             <DockPanel>
                 <Button Content="Add" Command="{Binding AddEquipmentCommand}" Width="78" Margin="5" />
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Width="90" Margin="5"/>

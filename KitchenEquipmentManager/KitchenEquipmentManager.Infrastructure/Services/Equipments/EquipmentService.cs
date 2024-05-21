@@ -9,36 +9,49 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Equipments
     public class EquipmentService : IEquipmentService
     {
         private readonly IDataRepository<Equipment> _equipmentRepository;
-        public EquipmentService(IDataRepository<Equipment> equipmentRepository)
+        private readonly IDataRepository<RegisteredEquipment> _registeredEquipmentRepository;
+        public EquipmentService(
+            IDataRepository<Equipment> equipmentRepository,
+            IDataRepository<RegisteredEquipment> registeredEquipmentRepository)
         {
             _equipmentRepository = equipmentRepository ?? throw new ArgumentNullException(nameof(equipmentRepository));
+            _registeredEquipmentRepository = registeredEquipmentRepository ?? throw new ArgumentNullException(nameof(registeredEquipmentRepository));
         }
-        public bool AddEquipment(Equipment site)
+        public void AddEquipment(Equipment equipment)
         {
             try
             {
-                _equipmentRepository.Add(site);
-
-                return true;
+                _equipmentRepository.Add(equipment);
 
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
-        public bool DeleteEquipment(Equipment site)
+        public void RegisterEquipmentToSite(RegisteredEquipment registerEquipment)
+        {
+            try
+            {
+                _registeredEquipmentRepository.Add(registerEquipment);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public void DeleteEquipment(Equipment site)
         {
             try
             {
                 _equipmentRepository.Remove(site.Id);
-
-                return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -50,24 +63,24 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Equipments
 
                 return equipments;
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                throw new Exception();
+                throw ex;
             }
             
         }
 
-        public bool UpdateEquipment(Equipment site)
+        public void UpdateEquipment(Equipment site)
         {
             try
             {
                 _equipmentRepository.Update(site, site.Id);
 
-                return true;
+            
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
     }

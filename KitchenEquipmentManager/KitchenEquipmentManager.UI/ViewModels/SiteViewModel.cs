@@ -15,7 +15,7 @@ namespace KitchenEquipmentManager.UI.ViewModels
     {
         private ObservableCollection<Site> _sites;
         private string _description;
-        private string _isActive;
+        private bool _isActive;
         private UserViewModel _currentUserLoggedIn = new UserViewModel();
 
         private readonly ISiteService _siteService;
@@ -28,7 +28,6 @@ namespace KitchenEquipmentManager.UI.ViewModels
         public SiteViewModel(ISiteService siteService) 
         { 
             _siteService = siteService ?? throw new ArgumentNullException(nameof(siteService));
-            SelectedSiteState = SiteStates.FirstOrDefault();
         }
 
         public ICommand AddSiteCommand
@@ -95,7 +94,7 @@ namespace KitchenEquipmentManager.UI.ViewModels
             set => SetProperty(ref _description, value, nameof(SiteDescription));
         }
 
-        public string SelectedSiteState
+        public bool SelectedSiteState
         {
             get => _isActive;
             set => SetProperty(ref _isActive, value, nameof(SelectedSiteState));
@@ -107,14 +106,14 @@ namespace KitchenEquipmentManager.UI.ViewModels
             set => SetProperty(ref _currentUserLoggedIn, value, nameof(CurrentUserLoggedIn));
         }
 
-        public List<string> SiteStates
+        public List<bool> SiteStates
         {
             get
             {
-                return new List<string>() 
+                return new List<bool>() 
                 { 
-                    "Yes",
-                    "No"
+                    true,
+                    false
                 };
             }
         }
@@ -140,20 +139,20 @@ namespace KitchenEquipmentManager.UI.ViewModels
             }
 
             var site = new Site();
-            site.Active = SelectedSiteState == "Yes";
+            site.Active = SelectedSiteState;
             site.Description = SiteDescription;
             site.UserId = CurrentUserLoggedIn.UserId;
 
-            bool isAdded = _siteService.AddSite(site);
-
-            if (isAdded)
+            try
             {
+                _siteService.AddSite(site);
+
                 Sites.Add(site);
                 MessageBox.Show("Added successfully", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                MessageBox.Show("There is an error adding the item.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -162,15 +161,28 @@ namespace KitchenEquipmentManager.UI.ViewModels
             if (site == null)
                 return;
 
-            bool isUpdateSuccessful = _siteService.UpdateSite(site);
-
-            if (isUpdateSuccessful)
+            if (string.IsNullOrEmpty(SiteDescription))
             {
+                MessageBox.Show("Please fill up empty fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (Sites.Contains(site))
+            {
+                MessageBox.Show("No updates were made.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                return;
+            }
+
+            try
+            {
+                _siteService.UpdateSite(site);
+
                 MessageBox.Show("Update successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                MessageBox.Show("Update unsuccessful.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -179,16 +191,29 @@ namespace KitchenEquipmentManager.UI.ViewModels
             if (site == null)
                 return;
 
-            bool isDeleteSuccessful = _siteService.DeleteSite(site);
-
-            if (isDeleteSuccessful)
+            if (string.IsNullOrEmpty(SiteDescription))
             {
+                MessageBox.Show("Error on deleting the item.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!Sites.Contains(site))
+            {
+                MessageBox.Show("Error on deleting the site. Please finish update first before deleting the item", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            try
+            {
+                _siteService.DeleteSite(site);
+
                 Sites.Remove(site);
                 MessageBox.Show("Delete successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch (InvalidOperationException ex)
             {
-                MessageBox.Show("Delete successful", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

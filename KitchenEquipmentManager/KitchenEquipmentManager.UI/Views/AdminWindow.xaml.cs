@@ -62,9 +62,18 @@ namespace KitchenEquipmentManager.UI.Views
         {
             var equipmentMenuWindow = new EquipmentWindow();
 
+            //Retrieve sites to that user can register it.
+            var sitesMenuViewModel = AdminViewModel.GetRequiredService().GetService<SiteViewModel>();
+            sitesMenuViewModel.CurrentUserLoggedIn = AdminViewModel.UserViewModel;
+            sitesMenuViewModel.GetSites();
+
             var equipmentMenuViewModel = AdminViewModel.GetRequiredService().GetService<EquipmentViewModel>();
             equipmentMenuViewModel.CurrentUserLoggedIn = AdminViewModel.UserViewModel;
             equipmentMenuViewModel.RetrieveEquipments();
+
+
+            equipmentMenuViewModel.Sites = sitesMenuViewModel.Sites;
+            
             equipmentMenuWindow.DataContext = equipmentMenuViewModel;
             
             equipmentMenuWindow.ShowDialog();
@@ -76,6 +85,12 @@ namespace KitchenEquipmentManager.UI.Views
             // Redirect the user to Login Window
             this.Close();
             Application.Current.MainWindow.Show();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

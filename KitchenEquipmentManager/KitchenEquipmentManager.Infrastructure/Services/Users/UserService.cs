@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using KitchenEquipmentManager.Domain.Models;
-using KitchenEquipmentManager.Infrastructure.Constants;
 using KitchenEquipmentManager.Repository.Services;
 
 namespace KitchenEquipmentManager.Infrastructure.Services.Users
@@ -14,17 +13,15 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
         { 
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
-        public bool DeleteUser(User user)
+        public void DeleteUser(User user)
         {
             try
             {
                 _userRepository.Remove(user.Id);
-
-                return true; // Successful delete
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
 
@@ -36,23 +33,21 @@ namespace KitchenEquipmentManager.Infrastructure.Services.Users
 
                 return users.ToList();
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                throw new Exception();
+                throw ex;
             }
         }
 
-        public bool UpdateUser(User user)
+        public void UpdateUser(User user)
         {
             try
             {
                 _userRepository.Update(user, user.Id);
-
-                return true; // Successful delete
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
-                return false;
+                throw ex;
             }
         }
     }

@@ -25,14 +25,11 @@
         <TextBlock Text="Login" FontSize="24" FontWeight="Bold" Grid.Row="0" Grid.ColumnSpan="2" 
                    HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-        <Label Content="Username:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="20,3,220,0" Grid.RowSpan="2" />
-        <TextBox x:Name="UsernameTextBox" Text="{Binding Username}" Grid.Row="1" Width="200" Margin="104,6,56,4" Grid.ColumnSpan="2"/>
+        <Label Content="Username:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="41,0,199,0" />
+        <TextBox x:Name="UsernameTextBox" Text="{Binding Username}" Grid.Row="1" Margin="126,6,79,4" Grid.ColumnSpan="2"/>
 
-        <Label Content="Password:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="20,0,220,0" />
-        <PasswordBox x:Name="PasswordBox" local:PasswordBoxBindingBehavior.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="200" Margin="104,5,56,5" Grid.ColumnSpan="2"/>
-
-        <TextBlock x:Name="ErrorTextBlock" Grid.Row="3" Grid.ColumnSpan="2" Foreground="Red" 
-                   HorizontalAlignment="Center" Margin="0,5" Visibility="Collapsed"/>
+        <Label Content="Password:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="41,0,199,0" />
+        <PasswordBox x:Name="PasswordBox" local:PasswordBoxBindingBehavior.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Margin="126,5,79,5" Grid.ColumnSpan="2"/>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="92,20,0,0" Grid.ColumnSpan="2">
             <Button Content="Login" Command="{Binding LoginUserCommand}"  Width="88" Margin="5" Height="21"/>

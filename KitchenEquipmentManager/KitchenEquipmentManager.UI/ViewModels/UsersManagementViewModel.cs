@@ -6,6 +6,7 @@ using System.Windows.Input;
 using KitchenEquipmentManager.Domain.Models;
 using KitchenEquipmentManager.Infrastructure.Services.Users;
 using KitchenEquipmentManager.UI.Command.Generic;
+using KitchenEquipmentManager.UI.Views;
 
 namespace KitchenEquipmentManager.UI.ViewModels
 {
@@ -86,16 +87,11 @@ namespace KitchenEquipmentManager.UI.ViewModels
             if (user == null)
                 return;
 
+            bool currentUser = isCurrentUser(user);
+
             if (string.IsNullOrEmpty(user.UserName))
             {
                 MessageBox.Show("Please update empty fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            //Let's check if there are changes made, make sure to finish update first before deleting to prevent any error
-            if (Users.Contains(user))
-            {
-                MessageBox.Show("No updates were made.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
@@ -104,6 +100,13 @@ namespace KitchenEquipmentManager.UI.ViewModels
                 _userService.UpdateUser(user);
 
                 MessageBox.Show("Update successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (currentUser)
+                {
+                    MessageBox.Show("Please relogin to relfect the changes in your account", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    closeUserWindow();
+                    navigateToLogin();
+                }
             }
             catch (InvalidOperationException ex)
             {
@@ -137,7 +140,33 @@ namespace KitchenEquipmentManager.UI.ViewModels
 
         private bool isCurrentUser(User user)
         {
-            return (CurrentUserLoggedIn.UserId == user.Id) && (CurrentUserLoggedIn.UserName == user.UserName);
+            return (CurrentUserLoggedIn.UserId == user.Id);
+        }
+
+        private void closeUserWindow()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is UsersWindow)
+                {
+                    window.Close();
+                    continue;
+                }
+            }
+        }
+
+        private void navigateToLogin()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is AdminWindow)
+                {
+                    window.Close();
+                    Application.Current.MainWindow.Show();
+                    break;
+                }
+            }
+            
         }
 
     }

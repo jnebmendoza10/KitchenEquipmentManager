@@ -9,6 +9,7 @@ using System.Windows.Input;
 using KitchenEquipmentManager.Domain.Models;
 using KitchenEquipmentManager.Infrastructure.Services.Equipments;
 using KitchenEquipmentManager.UI.Command;
+using KitchenEquipmentManager.UI.Views;
 
 namespace KitchenEquipmentManager.UI.ViewModels
 {
@@ -76,6 +77,8 @@ namespace KitchenEquipmentManager.UI.ViewModels
                 _equipmentService.RegisterEquipmentToSite(registerEquipment);
 
                 MessageBox.Show("Registration successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                closeRegisterEquipmentWindow();
             }
 
             catch (InvalidOperationException ex)
@@ -83,5 +86,17 @@ namespace KitchenEquipmentManager.UI.ViewModels
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void closeRegisterEquipmentWindow()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is RegisterEquipmentWindow)
+                {
+                    window.Close();
+                    break;
+                }
+            }
+        }
+
     }
 }

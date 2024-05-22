@@ -23,8 +23,7 @@
 
         <!-- Form -->
         <StackPanel Grid.Row="1" Margin="10">
-
-            <Label Content="Select Site:"/>
+            <Label Content="Select Site:" Width="310"/>
             <ComboBox ItemsSource="{Binding Sites}"  SelectedItem="{Binding SelectedSite, Mode=TwoWay}" DisplayMemberPath="Description" SelectedValuePath="Id" Width="300" Margin="0,0,0,20"/>
 
             <Button Content="Register" Command="{Binding RegisterCommand}" Width="100" HorizontalAlignment="Center"/>

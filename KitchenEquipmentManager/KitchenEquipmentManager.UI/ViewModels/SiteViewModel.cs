@@ -191,16 +191,9 @@ namespace KitchenEquipmentManager.UI.ViewModels
             if (site == null)
                 return;
 
-            if (string.IsNullOrEmpty(SiteDescription))
+            if (string.IsNullOrEmpty(site.Description))
             {
                 MessageBox.Show("Error on deleting the item.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (!Sites.Contains(site))
-            {
-                MessageBox.Show("Error on deleting the site. Please finish update first before deleting the item", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 return;
             }
 

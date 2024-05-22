@@ -53,15 +53,15 @@
         <!-- Site Edit/Add Form -->
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
             <TextBlock Text="Site Details" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
-
-            <Label Content="Site Description:"/>
+            <Label Content="Site Description:" Width="220
+                   "/>
             <TextBox x:Name="Description" Text="{Binding SiteDescription}" Width="200" Margin="0,0,10,10"/>
 
             <Label Content="Is Active?:"/>
-            <ComboBox x:Name="LocationTextBox" ItemsSource="{Binding SiteStates}" Width="200" Margin="0,0,10,20"/>
+            <ComboBox x:Name="LocationTextBox" ItemsSource="{Binding SiteStates}" Width="200" Margin="0,0,10,10"/>
             <DockPanel>
-                <Button Content="Add" Command="{Binding AddSiteCommand}" Width="100" Margin="5" />
-                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="100" Margin="5" />
+                <Button Content="Add" Command="{Binding AddSiteCommand}" Width="90" Margin="5" />
+                <Button Content="Cancel" Command="{Binding CancelCommand}" Width="90" Margin="5" />
             </DockPanel>
 
         </StackPanel>

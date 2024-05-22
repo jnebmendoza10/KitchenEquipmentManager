@@ -84,13 +84,8 @@ namespace KitchenEquipmentManager.UI.Views
             // Create a logic to dispose all views and viewmodels.
             // Redirect the user to Login Window
             this.Close();
-            Application.Current.MainWindow.Show();
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
+            var window = Application.Current.MainWindow;
+            window.ShowDialog();
         }
     }
 }

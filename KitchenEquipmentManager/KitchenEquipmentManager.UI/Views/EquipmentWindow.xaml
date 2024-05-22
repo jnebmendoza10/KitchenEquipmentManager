@@ -27,8 +27,8 @@
         <DataGrid x:Name="EquipmentDataGrid" ItemsSource="{Binding Equipments}" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0" 
                   CanUserAddRows="False" IsReadOnly="False" SelectionMode="Single" Margin="0,10,0,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
-                <DataGridTextColumn Header="Description"  Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                <DataGridTextColumn Header="Description"  Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
                 <DataGridTemplateColumn Header="Condition" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -43,7 +43,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="Register"  Command="{Binding DataContext.RegisterEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
-                                <Button Content="Edit" Command="{Binding DataContext.UpdateEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
+                                <Button Content="Update" Command="{Binding DataContext.UpdateEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                                 <Button Content="Delete" Command="{Binding DataContext.DeleteEquipmentCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Margin="5,0" />
                             </StackPanel>
                         </DataTemplate>
@@ -58,14 +58,13 @@
 
             <Label Content="Serial Number:"/>
             <TextBox x:Name="SerialNumberTextBox" Text="{Binding EquipmentSerialNumber}" Width="200" Margin="0,0,10,10"/>
-
-            <Label Content="Description:"/>
+            <Label Content="Description:" Width="220"/>
             <TextBox x:Name="DescriptionTextBox" Text="{Binding EquipmentDescription}" Width="200" Margin="0,0,10,10"/>
 
             <Label Content="Condition:"/>
             <ComboBox x:Name="ConditionComboBox" ItemsSource="{Binding Conditions}" SelectedItem="{Binding EquipmentCondition}" Width="200" Margin="0,0,10,10"/>
             <DockPanel>
-                <Button Content="Add" Command="{Binding AddEquipmentCommand}" Width="78" Margin="5" />
+                <Button Content="Add" Command="{Binding AddEquipmentCommand}" Width="90" Margin="5" />
                 <Button Content="Cancel" Command="{Binding CancelCommand}" Width="90" Margin="5"/>
             </DockPanel>
 
